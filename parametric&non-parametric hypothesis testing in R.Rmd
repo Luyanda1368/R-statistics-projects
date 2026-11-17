@@ -1,0 +1,231 @@
+---
+title: "parametric and non-parametric hypothesis testing in R"
+author: 'Luyanda Nkosi'
+date: "2026-08-16"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Question 1
+
+```{r}
+
+# 1.1
+
+ # a.
+
+sales <-c(2450,2600,2350,2700,2400,2550,2500,2650,2300,2750,2480,2520)
+t.test(sales,mu=2500)
+
+ # the p-value is greater than alpha, 0.6102 > 0.05, therefore we do not reject the null hypothesis and we can conclude that the average daily sales is not significantly different from R2500.
+
+ # b.
+sales <-c(2450,2600,2350,2700,2400,2550,2500,2650,2300,2750,2480,2520)
+t.test(sales,mu=2500,alternative = "greater")
+
+ # the p-value is greater than alpha,0.3051 >0.05, therefore we do not reject the null hypothesis and can conclude that the average daily sales is not significantly greater than R2500.
+
+# c.
+
+ # the sample is randomly selected, a sample of 12 days was randomly selected.
+ # observations are independent,the average sales of one day does not affect the next day.
+
+# d.
+
+ # we are 95% confident that the average daily sales is between R2433.444 and R2608.222.
+
+```
+
+# Question 2
+
+```{r}
+# 2.1
+ # a.
+
+methodA <-c(78,85,90,76,82,88,84,80)
+methodB <-c(72,80,75,85,70,78,82,76,74,79)
+t.test(methodA,methodB,alternative="greater")
+
+ # the p-value is less than alpha, 0.01064<0.05, therefore we reject the null hypothesis and can conclude that teaching method A is more effective than teaching method B.
+
+# b.
+
+methodA <-c(78,85,90,76,82,88,84,80)
+methodB <-c(72,80,75,85,70,78,82,76,74,79)
+t.test(methodA,methodB)
+
+ # the p-value is less than alpha,0.02128<0.05, therefore we reject the null hypothesis and conclude that there is a significant difference between the two methods.
+
+# c.
+ # the variances must be equal.
+
+# d.
+
+# i would test for equality using the f-test.
+
+# e.
+
+ #we are 95% confident that the difference between the population mean of method A and method B  is between 0.9894347 and 10.5605653.
+ # since the interval does not contain a zero and both bounds are positive, this indicate that mean score of method A is significantly higher than the mean score of method B at 95% confidence level.
+
+```
+
+# Question 3
+
+```{r}
+# 3.1
+ # a.
+before <-c(85,90,78,92,88,76,82,95)
+after <-c(80,84,73,86,83,72,78,88)
+loss <-after-before
+t.test(loss,mu=5, alternative="greater")
+
+ # the p-value is greater than alpha,1> 0.05, so we do not reject the null hypothesis and can conclude that the program is significantly effective.
+
+# b.
+
+before <-c(85,90,78,92,88,76,82,95)
+after <-c(80,84,73,86,83,72,78,88)
+loss <-after-before
+t.test(loss,mu=5, alternative="two.sided")
+
+# c.
+ # a paired test is appropriate because the same participants are measured twice, therefore the measurements are dependent.
+
+# d.
+
+ # the advantage is that a paired design will help us see or measure  participants progress, by compering the before and after to see if the participants did loose weight.
+
+```
+
+# Question 4
+
+```{r}
+# 4.1
+ # a.
+
+x <-c(2450,2600,2350,2700,2400,2550,2500,2650,2300,2750,2480,2520)
+wilcox.test(x,mu= 2500)
+
+ # the p-value is greater than alpha, 0.6558> 0.05 therefore we do not reject the null hypothesis and can conlude that the average daily sales is not significantly different from R2500.
+
+# b.
+# Both tests lead to the same conclusion  but the t-test result from Question 1.1(a) makes more sense in this case, because it is more powerful than the wilcoxon signed rank testand also considering that we have a small sample size and that we are using actual sales and not ranks. 
+
+# c.
+ # the assumptions must be independent and data must be ordinal.
+```
+
+
+# Question 5
+
+```{r}
+
+# 5.1
+ # a.
+
+A <-c(78,85,90,76,82,88,84,80)
+B <-c(72,80,75,85,70,78,82,76,74,79)
+wilcox.test(A,B)
+ 
+ # the p-value is less than alpha, 0.032 > 0.05, therefore we reject the null hypothesis and can conclude that there is a significant different between effectiveness of method A and method B.
+
+# b.
+ #Both tests lead to the same conclusion  but the t-test result from Question 2.1(A) makes sense in this case.
+ # This is because the sample size is reasonably small(nA=8 and nB=10) and that we are using actual test scores for our hypothesis and not their rank. Also the t.test is much more powerful than the Wilcoxon Rank Sum Test when assumptions for normality hold.
+
+# c.
+ #Normality is violated
+ #Outliers are present
+```
+
+# Question 6
+
+```{r}
+# 6.1
+
+ # a.
+dietA <-c(5,6,4,7,5)
+dietB <-c(8,9,7,10,8)
+dietC <-c(3,4,2,5,3)
+kruskal.test(list(dietA,dietB,dietC))
+
+ # the p-value is less than alpha, 0.003578<0.05, therefore we reject the null hypothesis and can conclude that there is a significant different between the effectiveness of the three diet methods used.
+
+# b.
+ # there is a significant evidence that atleast one diet has a different weight loss distribution from others.
+
+# c.
+ # groups and observations are independent.
+
+# d.
+ #i would prefer the one way anova,as it is parametric and it is more powerful than the kruskal test when the assumptions are satisfied.
+
+```
+
+# Question 7
+
+```{r}
+# 7.1
+
+ # a.
+modelx <-c(14.5,15.2,13.8,14.9,15.5,14.2,15.1,14.7)
+modely <-c(13.2,12.8,14.0,13.5,12.9,13.7,13.1,13.4)
+t.test(modelx,modely)
+
+ # the p-value is less than alpha,0.00006697< 0.05, therefore we reject the null hypothesis and can conclude that there is a significant different between fuel efficiency of the two cars.
+
+modelx <-c(14.5,15.2,13.8,14.9,15.5,14.2,15.1,14.7)
+modely <-c(13.2,12.8,14.0,13.5,12.9,13.7,13.1,13.4)
+wilcox.test(modelx,modely)
+
+ # the p-value is less than alpha, 0.0003108 < 0.05, therefore we reject the null hypothesis and can conclude that there is a significant different between fuel efficiency of the two car models.
+
+# b.
+
+ # i would recommend the independent-samples t-test, because the two groups are independent and the t-test compares the mean fuel efficiency of the two cars directly.
+
+# c.
+ #The observations within and between groups must be independent of each other.
+ #The dependent variable should be measured on an ordinal scale
+ #There is no requirement for normality
+
+# d.
+ # The one-way ANOVA
+ # Because assumptions for normality and equal variance are present which makes it more powerful than the Kruskal-Wallis test.
+```
+
+# Question 8
+
+```{r}
+# 8.1
+t_result <- t.test(sales, mu = 2500)
+# Extract the t-statistic and p-value
+t_stat <- round(t_result$statistic, 3)
+p_val  <- round(t_result$p.value, 3)
+
+# Build the sentence automatically
+cat("The one-sample t-test for the coffee shop sales gave a t-statistic of", t_stat,"and a p-value of",  p_val,".")
+
+# 8.2
+
+test_used   <- "Two Sample t-test"
+test_stat   <- round(t_result$statistic, 3)
+df_val      <- t_result$parameter
+p_val       <- round(t_result$p.value, 4)
+conclusion  <- ifelse(p_val < 0.05,
+                       "Reject H0 - Method A is significantly more effective than Method B",
+                       "Fail to reject H0 - insufficient evidence that Method A is more effective")
+
+cat("========== Summary Table ==========\n")
+cat("Test Used         :", test_used, "\n")
+cat("Test Statistic    :", test_stat, "\n")
+cat("Degrees of Freedom:", df_val, "\n")
+cat("P-value           :", p_val, "\n")
+cat("Conclusion        :", conclusion, "\n")
+cat("====================================\n")
+```
+
